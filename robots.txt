@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://forthebeautifulworld.github.io/sitemap.xml
+Sitemap: https://min-seong-kim.github.io/sitemap.xml
