@@ -1,65 +1,74 @@
 ---
 layout: page
-title: projects
-permalink: /projects/
-description: A growing collection of your cool projects.
+title: photos
+permalink: /photos/
+description: Memorable pictures
 nav: true
 nav_order: 3
 display_categories: [work, fun]
 horizontal: false
 ---
 
-<!-- pages/projects.md -->
-<div class="projects">
-{% if site.enable_project_categories and page.display_categories %}
-  <!-- Display categorized projects -->
-  {% for category in page.display_categories %}
-  <a id="{{ category }}" href=".#{{ category }}">
-    <h2 class="category">{{ category }}</h2>
-  </a>
-  {% assign categorized_projects = site.projects | where: "category", category %}
-  {% assign sorted_projects = categorized_projects | sort: "importance" %}
-  <!-- Generate cards for each project -->
-  {% if page.horizontal %}
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
+<div class="photos">
+  {% assign all_photos = site.data.photos %}
+  {% for photo_set in all_photos %}
+    <div class="photo-set">
+      <h2 class="photo-title">{{ photo_set.title }}</h2>
+      <p class="photo-description">{{ photo_set.description }}</p>
+      <div class="photo-images">
+        {% for photo in photo_set.photos %}
+          <img src="{{ photo }}" alt="{{ photo_set.title }}" class="photo-img" onclick="toggleZoom(this, event)">
+        {% endfor %}
+      </div>
     </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
   {% endfor %}
-
-{% else %}
-
-<!-- Display projects without categories -->
-
-{% assign sorted_projects = site.projects | sort: "importance" %}
-
-  <!-- Generate cards for each project -->
-
-{% if page.horizontal %}
-
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-    {% for project in sorted_projects %}
-      {% include projects_horizontal.liquid %}
-    {% endfor %}
-    </div>
-  </div>
-  {% else %}
-  <div class="row row-cols-1 row-cols-md-3">
-    {% for project in sorted_projects %}
-      {% include projects.liquid %}
-    {% endfor %}
-  </div>
-  {% endif %}
-{% endif %}
 </div>
+
+<!-- JavaScript 수정 -->
+<script>
+let zoomedImg = null;
+
+function toggleZoom(img, event) {
+  event.stopPropagation(); // 이벤트 버블링 방지
+  
+  if (zoomedImg === img) {
+    // 현재 확대된 이미지를 다시 클릭한 경우
+    img.classList.remove('zoomed');
+    zoomedImg = null;
+  } else {
+    // 다른 이미지가 확대되어 있었다면 원래 크기로
+    if (zoomedImg) {
+      zoomedImg.classList.remove('zoomed');
+    }
+    // 새로운 이미지 확대
+    img.classList.add('zoomed');
+    zoomedImg = img;
+  }
+}
+
+// 페이지 어디든 클릭하면 확대 해제
+document.addEventListener('click', function() {
+  if (zoomedImg) {
+    zoomedImg.classList.remove('zoomed');
+    zoomedImg = null;
+  }
+});
+</script>
+
+<!-- CSS 스타일 수정 -->
+<style>
+.photo-img {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.photo-img:hover {
+  opacity: 0.7;
+}
+
+.photo-img.zoomed {
+  transform: scale(2.0);
+  z-index: 1000;
+  position: relative;
+}
+</style>

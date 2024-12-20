@@ -1131,6 +1131,49 @@ swiper-container {
   }
 }
 
+.photos {
+  max-width: 1000px; /* 기존 800px에서 확장 */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.photo-set {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.photo-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.photo-description {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.photo-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.photo-img {
+  max-width: 100%;
+  max-width: 1000px; /* 최대 너비를 600px로 제한 */
+  height: auto;
+  max-height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
 // Ninja Keys
 // for more options, check https://github.com/ssleptsov/ninja-keys?tab=readme-ov-file#css-variables
 ninja-keys {
