@@ -8,11 +8,12 @@
     - "/assets/img/kcc2024_4.jpg"
 
 
-# - title: "ACM SIGMOD Conference, Santiago, Chile, 2024"
-#   description: "Poster and Oral Presentation, and Travel to Valparaíso with My Advisor, Prof. Jongmoo Choi"
-#   photos:
-#     - "/assets/img/SIGMOD1.png"
-#     - "/assets/img/SIGMOD2.jpg"
-#     - "/assets/img/SIGMOD3.jpg"
-#     - "/assets/img/SIGMOD4.jpg"
+- title: "Workshop on Dependable and Secure Computing, Jeju, Korea, 2024 "
+  description: "Presentations by Me, Lab Member, and Prof. Jongmoo Choi"
+  photos:
+    - "/assets/img/wdsc2024_01.png"
+    - "/assets/img/wdsc2024_02.jpg"
+    - "/assets/img/wdsc2024_04.jpg"
+    - "/assets/img/wdsc2024_05.jpg"
+    - "/assets/img/wdsc2024_03.jpg"
 
