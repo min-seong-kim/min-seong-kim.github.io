@@ -178,6 +178,8 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
     {% include figure.liquid loading="eager" path="assets/img/cell_code_3.png" %}
 </div>
 
+<br>
+
 ### Artifact carving
 
 <div class="free page header Architecture">
@@ -202,3 +204,103 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 이때 새로 삽입된 데이터들이 기존 삭제된 데이터를 덮어 씌어진 것을 확인할 수 있다.
 해당 시나리오는 아티팩트 카빙 작업을 통해 복원이 가능하나 파일 헤더 또는 레코드 헤더가 덮어씌어진 경우 정상적인 복원이 어렵다.
 
+<br>
+
+## Evaluation
+
+기존에 진행한 실험들은 각 기법마다 어느 정도의 복원률을 보장하는 지 제공하지 않아 직접 기법들을 실험했다. 
+<br>
+정확한 복원률을 확인하기 위해 Database viewer와 hex dump를 사용했다.
+<br>
+
+<div class="Architecture" style="max-width: 50%; margin: auto;">
+    {% include figure.liquid loading="eager" path="assets/img/FQlite.png" %}
+</div>
+
+실험에서는 높은 복원률을 보이는 SQLite 복원 도구인 FQLite를 선택해 SQLite 포렌식 코퍼스에서 평가를 진행하였으며 기존 SQLite 포렌식 코퍼스는 5개의 범주로 구성되어 있다.
+하지만 실험에서는 “삭제 및 덮어씌워진 내용”에 해당하는 범주를 이용해 평가하였고 세부 범주는 다음과 같은 5개의 카테고리로 나눠 살펴봤다.
+
+
+#### SQLite 파일 생성 범주
+ⓐDeleted table, ⓑdeleted and overwritten table, ⓒdeleted record, ⓓoverwritten record, ⓔdeleted overflow page
+<br>
+| Categories | Operations                                                        |
+|-------|-------------------------------------------------------------------|
+| 0A-03 | create 2, insert 10/each, drop/each                               |
+| 0B-02 | create 3, insert 10/each, drop 1, create 1, insert 5              |
+| 0C-02 | create 2 (int cols), insert 20/each, delete 5/each                |
+| 0D-03 | create, insert 10, delete 5, insert 10: match 1                  |
+| 0E-02 | create, insert 20 (Overflow due to the insertion of large records, many columns), delete 5 |
+
+<br>
+이때 삭제된 데이터 복원을 확인하기 위해 secure_delete를 비활성화하고 삭제 작업을 진행
+<br>
+
+
+#### 실험 결과
+| ID    | Undark  | SQLite Deleted Records Parser | SQLabs SQLite Doctor | Stellar Phoenix Repair for SQLite | SysTools SQLite Database Recover | Sanderson Forensic Browser for SQLite | FQLite  | Free page | Artifact Carving |
+|-------|---------|-------------------------------|-----------------------|------------------------------------|----------------------------------|----------------------------------------|---------|-----------|------------------|
+| 0A-01 | 20/20*  | 0/20                          | 0/20                  | 0/20                               | 0/20                             | 0/20                                   | 20/20   | 0/20      | 20/20           |
+| 0A-03 | 20/20*  | 0/20                          | 0/20                  | 0/20                               | 0/20                             | 0/20                                   | 20/20   | 10/20     | 10/20           |
+| 0B-01*| 0/10    | 0/10                          | 0/10                  | 0/10                               | 0/10                             | 0/10                                   | 10/10   | 5/10      | 5/10            |
+| 0B-02 | 0/10    | 0/10                          | 0/10                  | 0/10                               | 0/10                             | 0/10                                   | 10/10   | 0/10      | 10/10           |
+| 0C-01*| 0/7     | 0/7                           | 0/7                   | 0/7                                | 0/7                              | 7/7                                    | 7/7     | 0/7       | 7/7             |
+| 0C-02 | 0/10    | 0/10                          | 0/10                  | 0/10                               | 0/10                             | 10/10*                                 | 10/10   | 0/10      | 10/10           |
+| 0D-01 | 0/5     | 2/5*                          | 0/5                   | 0/5                                | 0/5                              | 0/5                                    | 5/5     | 0/5       | 5/5             |
+| 0D-03 | 0/5     | 0/5                           | 0/5                   | 0/5                                | 0/5                              | 0/5                                    | 5/5     | 0/5       | 5/5             |
+| 0E-01 | 3/7     | 2/7                           | 0/7                   | 0/7                                | 0/7                              | 3/7                                    | 7/7     | 2/7       | 5/7             |
+| 0E-02 | 0/5     | 0/5                           | 0/5                   | 0/5                                | 0/5                              | 0/5                                    | 5/5     | 0/5       | 5/5             |
+
+
+<br>
+실험 결과이다.
+<br>
+위 표는 SQLite 복원 방식 및 도구들의 복원율 상세 분석 결과를 보여준다.
+<br>
+(*표시는 일부 복원 및 잘못된 복원이 포함된 경우)
+<br>
+
+***
+
+전반적인 결과를 확인해보면 프리 페이지 리스트를 통한 복원 기법이 아티팩트 카빙에 비해 복원률이 매우 낮은 것을 확인할 수 있다. 이는 대부분의 데이터베이스 파일 헤더에 프리 페이지에 대한 정보가 남아있지 않기 때문이다.
+또한 Undartk나 SQLite Deleted Records Parser는 상대적으로 높은 복원률을 보였지만 대부분 잘못된 복원에 해당하는 경우가 많았다.
+
+***
+
+이때 아티팩트 카빙이 다른 범주에서는 복구율이 100%인 것에 비해 B-1 방식에서 복구율이 절반인 것을 확인할 수 있다.
+<br>
+이는 이전 아티팩트 카빙에서 보여준 시나리오처럼 데이터베이스 파일 헤더에 대한 정보가 없어 해당 레코드가 어디에 속해 있었는지 알 수 없기 때문이다. 
+
+##### Recovery Rate Graph
+<div class="Architecture">
+    {% include figure.liquid loading="eager" path="assets/img/recovery_rate.png" %}
+</div>
+
+위 그림은 전 실험에서 진행한 복원 기법 별 복원율 그래프이다.
+<br>
+실험 결과는 프리 페이지 리스트의 경우 11.51% 정도 복원한 모습을 보이는 반면 아티팩트 카빙은 100%의 복원율을 보여줬다.
+<br>
+하지만 전에 말한 0B-01에서 보인 신뢰도 문제가 발생한다.
+<br>
+이 실험은 SQLite 포렌식 코퍼스에 한정된 실험 결과로 secure_delete가 수행되거나 안티 포렌식 기능인 Vacuum이 수행되면 모든 프리 리스트와 slack 공간이 회수되므로 복원이 불가능한 경우가 증가하게 된다.
+
+
+##### Recovery Performance Graph
+
+<div class="Architecture">
+    {% include figure.liquid loading="eager" path="assets/img/time_read.png" %}
+</div>
+위 사진은 기법 별 성능 그래프이다.   
+이 실험은 아티팩트 카빙에서 덮어 씌어진 정도에 따라 복원 작업이 큰 차이를 보이므로 레코드 복원을 위한 페이지 헤더 획득까지의 과정을 수행하였다.   
+실험은 다음과 같은 환경에서 진행하였습니다.   
+| Component | Specification                            |
+|-----------|-----------------------------------------|
+| CPU       | 12th Gen Intel(R) Core(TM) i7-12700H    |
+| Memory    | 16GB                                    |
+| Database  | Chinook.db (15,607 lines, 1MB)          |
+<br>
+실험 결과 프리 페이지 리스트을 사용한 경우 아티팩트 카빙보가 약 32.34% 더 빠른 성능을 보였다.    
+그 이유는 아티팩트 카빙은 페이지 헤더가 손상되었을 가능성이 있어 추가 데이터 수집이 강제되기 때문입니다.   
+
+하지만 이는 페이지 헤더만으로 판별 가능한 이상적인 경우이며 추가적인 셀 정보에 대한 작업이 필요한 경우 더 긴 작업 시간이 요구된다.   
+결과적으로 프리 페이지 리스트 및 페이지 유형에 대한 오프셋이 존재하는 경우 상대적으로 빠른 페이지 리스트 방식을 이요하고 이외 경우는 아티팩트 카빙을 적용하는 것이 효율적이다.
