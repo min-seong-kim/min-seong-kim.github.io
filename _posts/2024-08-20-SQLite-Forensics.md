@@ -223,7 +223,7 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 
 #### SQLite 파일 생성 범주
 ⓐDeleted table, ⓑdeleted and overwritten table, ⓒdeleted record, ⓓoverwritten record, ⓔdeleted overflow page
-<br>
+
 | Categories | Operations                                                        |
 |-------|-------------------------------------------------------------------|
 | 0A-03 | create 2, insert 10/each, drop/each                               |
@@ -238,6 +238,8 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 
 
 #### 실험 결과
+
+
 | ID    | Undark  | SQLite Deleted Records Parser | SQLabs SQLite Doctor | Stellar Phoenix Repair for SQLite | SysTools SQLite Database Recover | Sanderson Forensic Browser for SQLite | FQLite  | Free page | Artifact Carving |
 |-------|---------|-------------------------------|-----------------------|------------------------------------|----------------------------------|----------------------------------------|---------|-----------|------------------|
 | 0A-01 | 20/20*  | 0/20                          | 0/20                  | 0/20                               | 0/20                             | 0/20                                   | 20/20   | 0/20      | 20/20           |
