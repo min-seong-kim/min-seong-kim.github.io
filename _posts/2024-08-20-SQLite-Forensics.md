@@ -16,9 +16,8 @@ WDSC 논문 발표를 준비하며 공부한 SQLite Forensics 내용들
 ## SQLite Architecture
 
 다음 사진은 SQLite의 구조를 보여준다.
-
 <div class="SQLite Architecture">
-        {% include figure.liquid loading="eager" path="assets/img/SQLite_Architecture.png" class="img-fluid rounded z-depth-1" %}
+    {% include figure.liquid loading="eager" path="assets/img/SQLite_Architecture.png" %}
 </div>
 
 to the front matter of the post. The table of contents will be automatically generated from the headings in the post. If you wish to display the sidebar to the right, simply change `left` to `right`.
