@@ -44,9 +44,8 @@ SQLite는 페이지를 기본 단위로 사용하며 여러 개의 페이지로 
 
 ## Deleted record recovery technique
 
-### Free page list analysis
-
-<div class="Cell Architecture">
+#### Free page list analysis
+<div class="Cell Architecture" style="max-width: 50%; margin: auto;">
     {% include figure.liquid loading="eager" path="assets/img/free_page_list.png" %}
 </div>
 
@@ -55,16 +54,42 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 
 
 
-## Customizing Your Table of Contents
+| Name | Affiliation              | StudentID |
+|------|--------------------------|-----------|
+| KMS  | Dankook University1      | 1         |
+| LSH  | Dankook University2      | 2         |
+| ...  | ...                      | ...       |
+| KVY  | Dankook University2999   | 2999      |
+| LYM  | Dankook University3000   | 3000      |
 
-{:data-toc-text="Customizing"}
+삭제된 데이터 흔적이 남아 있기 위해 SQLite 기능인 secure_delete를 비활성화하고 삭제 작업 진행
+    sqlite> PRAGMA secure_delete = 0;
 
-If you want to learn more about how to customize the table of contents of your sidebar, you can check the [bootstrap-toc](https://afeld.github.io/bootstrap-toc/) documentation. Notice that you can even customize the text of the heading that will be displayed on the sidebar.
 
-### Example of Sub-Heading 2
 
-Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.
+#### Database file header analysis 
 
-### Example of another Sub-Heading 2
+아래 표는 Database file header에서 첫 40Byte의 구조를 보여준다.
 
-Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.
+| Offset | Size | Description                                  |
+|--------|------|----------------------------------------------|
+| 0      | 16   | Header string                               |
+| 16     | 2    | Page size                                   |
+| 18     | 1    | File format **write** version               |
+| 19     | 1    | File format **read** version                |
+| 20     | 1    | Size of reserved space                      |
+| 21     | 1    | Maximum payload fraction                    |
+| 22     | 1    | Minimum payload fraction                    |
+| 23     | 1    | Leaf payload fraction                       |
+| 24     | 4    | File change counter                         |
+| 28     | 4    | Size of database file in pages              |
+| 32     | 4    | Page number of the first free list trunk page |
+| 36     | 4    | Total number of free list pages             |
+
+이 표를 기반으로 .db 파일의 파일 헤더를 분석해보면
+    $hd test.db
+
+<div class="Cell Architecture" style="max-width: 50%; margin: auto;">
+    {% include figure.liquid loading="eager" path="assets/img/sql_file_header.png" %}
+</div>
+
