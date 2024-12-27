@@ -237,9 +237,6 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 <br>
 
 
-#### 실험 결과
-
-
 ### 실험 결과
 
 | ID    | Undark   | SQLite Deleted Records Parser | SQLabs SQLite Doctor | Stellar Phoenix Repair for SQLite | SysTools SQLite Database Recover | Sanderson Forensic Browser for SQLite | FQLite  | Free page | Artifact Carving |
@@ -292,7 +289,7 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 
 ##### Recovery Performance Graph
 
-<div class="Architecture" style="max-width: 80%; margin: auto;">
+<div class="Architecture" style="max-width: 60%; margin: auto;">
     {% include figure.liquid loading="eager" path="assets/img/time_read.png" %}
 </div>
 위 사진은 기법 별 성능 그래프이다.   
