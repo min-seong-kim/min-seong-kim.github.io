@@ -24,17 +24,17 @@ WDSC 논문 발표를 준비하며 공부한 SQLite Forensics 내용들
 
 <br>
 
-SQLite는 페이지를 기본 단위로 사용하며 여러 개의 페이지로 구성되어 있다.
-`Database file header`: 데이터베이스의 전반적인 메타데이터를 저장하고 첫 페이지에만 존재
-`Page header`: 페이지의 메타데이터를 저장
-`Cell pointer array`: 페이지 내 각 셀의 위치를 저장
-`Unallocated area`: 아직 할당되지 않은 공간
-`Cell`: 실제 데이터를 저장하는 단위
-`Reserved space`: 성능 최적화나 데이터 무결성을 위한 공간  
+SQLite는 페이지를 기본 단위로 사용하며 여러 개의 페이지로 구성되어 있다.   
+`Database file header`: 데이터베이스의 전반적인 메타데이터를 저장하고 첫 페이지에만 존재   
+`Page header`: 페이지의 메타데이터를 저장   
+`Cell pointer array`: 페이지 내 각 셀의 위치를 저장   
+`Unallocated area`: 아직 할당되지 않은 공간   
+`Cell`: 실제 데이터를 저장하는 단위   
+`Reserved space`: 성능 최적화나 데이터 무결성을 위한 공간   
 
 
 
-<br><br>
+<br>
 
 
 ## Cell Architecture
@@ -45,18 +45,18 @@ SQLite는 페이지를 기본 단위로 사용하며 여러 개의 페이지로 
 
 <br>
 
-셀의 내부 구조를 살펴보면
-`Cell header`: 셀의 크기와 레코드를 식별하는 Row ID를 저장
-`Record header`: 헤더의 크기와 각 데이터 필드의 타입과 길이를 저장
-`Data area`: 실제 데이터가 저장  
+셀의 내부 구조를 살펴보면   
+`Cell header`: 셀의 크기와 레코드를 식별하는 Row ID를 저장   
+`Record header`: 헤더의 크기와 각 데이터 필드의 타입과 길이를 저장   
+`Data area`: 실제 데이터가 저장   
 
-<br><br>
+<br>
 
 
 ## Deleted record recovery technique
 <br>
 
-### Free page list analysis
+### - Free page list analysis
 
 <div class="Cell Architecture" style="max-width: 50%; margin: auto;">
     {% include figure.liquid loading="eager" path="assets/img/free_page_list.png" %}
@@ -64,11 +64,14 @@ SQLite는 페이지를 기본 단위로 사용하며 여러 개의 페이지로 
 
 <br>
 
-Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 있고 삭제된 데이터를 포함하고 있다. 이 프리 페이지들을 분석하여 삭제된 레코드를 복원할 수 있다.  
+Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 있고 삭제된 데이터를 포함하고 있다.   
+이 프리 페이지들을 분석하여 삭제된 레코드를 복원할 수 있다.   
 
 
 아래는 삽입한 레코드이다.
+
 <br>
+
 | Name | Affiliation              | StudentID |
 |------|--------------------------|-----------|
 | KMS  | Dankook University1      | 1         |
@@ -87,7 +90,7 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 
 <br>
 
-#### Database file header analysis 
+### Database file header analysis 
 
 아래 표는 Database file header에서 첫 40Byte의 구조를 보여준다.
 
@@ -95,8 +98,8 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 |--------|------|----------------------------------------------|
 | 0      | 16   | Header string                               |
 | 16     | 2    | Page size                                   |
-| 18     | 1    | File format **write** version               |
-| 19     | 1    | File format **read** version                |
+| 18     | 1    | File format write version                 |
+| 19     | 1    | File format read version                  |
 | 20     | 1    | Size of reserved space                      |
 | 21     | 1    | Maximum payload fraction                    |
 | 22     | 1    | Minimum payload fraction                    |
@@ -126,7 +129,7 @@ Database 파일의 모든 프리 페이지는 리스트로 서로 연결되어 �
 
 위 식을 통해 free list page(0x5000)으로 이동  
 
-<br><br>
+<br>
 
 #### Free page header analysis 
 
