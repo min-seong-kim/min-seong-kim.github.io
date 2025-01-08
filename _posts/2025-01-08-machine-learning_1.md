@@ -52,9 +52,9 @@ toc:
 
 `x`: input으로 임의의 다차원 데이터(예: 사진, 텍스트)
 `y`: output으로 categorial한 데이터(예: 강아지, 고양이)
-`$\hat{f}$`: 수학적으로 input x를 $\hat{y}$로 예측, 기계 학습을 가지고 학습시키고자 하는 모델
+`$$\hat{f}$$`: 수학적으로 input x를 $\hat{y}$로 예측, 기계 학습을 가지고 학습시키고자 하는 모델
 
-$\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ input-output 데이터 셋을 통해 Traning하여 $y = \hat{y}$ 가 되도록 $\hat{f}$를 찾아내는 과정이다.
+$$\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$$ input-output 데이터 셋을 통해 Traning하여 $$y = \hat{y}$$ 가 되도록 $$\hat{f}$$를 찾아내는 과정이다.
 
 <br>
 
@@ -63,26 +63,55 @@ $\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ input-output 데이터 셋을 �
 회귀는 각 데이터가 어떤 continuous variable에 가까운지 예측하는 작업이다.   
 예측하기 때문에 정답값이 continuous한 변수라고 할 수 있다.
 
-**$\hat{y} = \hat{f}(\mathbf{x})$**   
+**$$\hat{y} = \hat{f}(\mathbf{x})$$**   
 
 `x`: input으로 임의의 다차원 데이터(예: 자동차의 다양한 정보)   
 `y`: output으로 continuos한 데이터(예: 자동차의 출력, 가격)   
-` $\hat{f}$ `: 수학적으로 input x를 $\hat{y}$로 예측, 기계 학습을 가지고 학습시키고자 하는 모델   
+`$$\hat{f}$$`: 수학적으로 input x를 $\hat{y}$로 예측, 기계 학습을 가지고 학습시키고자 하는 모델   
 
-**$\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ input-output**   
+**$$\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$$ input-output**   
 위 데이터 셋을 통해 Traning하여 $|y = \hat{y}|$ 가 최소가 되도록 $\hat{f}$를 찾아내는 과정으로 다음과 같이 요약할 수 있다.   
 
 
-**$\arg\min_{\hat{f}} (y - \hat{y})$**   
+**$$\arg\min_{\hat{f}} (y - \hat{y})$$**   
 
-**$y - \hat{y} 을 최소로 하는 argumnet \hat{f}$ 을 찾겠다.**
+**$$y - \hat{y} 을 최소로 하는 argumnet \hat{f}$$ 을 찾겠다.**
 
 <br>
 
 ## Unsupervised learning
 
-비지도 학습은 데이터의 output을 모르는 상태에서 input의 흥미로운 특징(insteresting structure)을 무형적으로 찾아내는 것이다. 
+비지도 학습은 데이터의 output을 모르는 상태에서 input의 흥미로운 특징(insteresting structure)을 무형적으로 찾아내는 것이다.   
+입력 데이터만 제공되고 그 데이터들을 기반으로 관계를 학습한다.   
 
+#### Clustering
+
+군집화는 데이터를 비슷한 것 끼리 짝지어 묶는 방법이다.   
+
+Cluster는 Euclidean 거리와 코사인 유사도 등을 사용해 기준을 나누며 Cluster 내부 데이터는 서로 유사성이 높다고 볼 수 있다.   
+
+가장 대표적인 알고리즘은 K-Means이다.   
+
+##### K-Means Clustering
+
+K-Means Clustering에서 K는 Cluster의 개수이며 Means는 평균을 의미한다. 이때 평균은 Cluster의 중심지로부터 데이터들 간의 거리의 평균을 나타낸다.   
+전체 과정은 5단계로 진행된다.   
+
+* * *
+
+- ① 군집의 개수(K) 설정
+가장 먼저 Cluster의 개수를 정하는 것이다. Cluster의 개수를 어떻게 정하는지에 따라 학습 결과가 크게 변하므로 데이터에 따라 적절하게 Cluster의 개수를 정해야 한다. 이를 정하는 방법이 몇 가지 존재한다.   
+
+1) Rule of Thumb
+
+**$$k \approx \sqrt{\frac{n}{2}}$$**
+
+이 방법은 가장 간단한 방법으로 맨 처음 명확한 기준이 없을 경우에 사용하며 대략적으로 Cluster의 개수를 추정한다.   
+필요한 클러스터의 개수는 위 식처럼 구할 수 있다.   
+
+2) Elbow Method
+
+3) Information Criterion Approach
 
 
 ## Reinforcement learning
