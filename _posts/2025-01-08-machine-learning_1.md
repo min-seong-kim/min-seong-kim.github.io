@@ -41,32 +41,48 @@ toc:
 
 지도 학습은 데이터의 input과 output을 아는 상태에서 둘 사이의 관계를 유형적으로 학습한다.   
 
-### Classification
+#### Classification
 
 분류는 각 데이터가 어떤 class에 속하는지 구분하는 작업이다.   
 정답값이 categorial한 변수라고 할 수 있다.
 
-### Regression
+
+**$\hat{y} = \hat{f}(\mathbf{x})$**
+
+
+`x`: input으로 임의의 다차원 데이터(예: 사진, 텍스트)
+`y`: output으로 categorial한 데이터(예: 강아지, 고양이)
+`$\hat{f}$`: 수학적으로 input x를 $\hat{y}$로 예측, 기계 학습을 가지고 학습시키고자 하는 모델
+
+$\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ input-output 데이터 셋을 통해 Traning하여 $y = \hat{y}$ 가 되도록 $\hat{f}$를 찾아내는 과정이다.
+
+<br>
+
+#### Regression
 
 회귀는 각 데이터가 어떤 continuous variable에 가까운지 예측하는 작업이다.   
 예측하기 때문에 정답값이 continuous한 변수라고 할 수 있다.
 
-````
-    $\hat{y} = \hat{f}(\mathbf{x})$
-````
+**$\hat{y} = \hat{f}(\mathbf{x})$**   
 
-`x`: input으로 임의의 다차원 데이터(예: 사진, 텍스트)
-`$\hat{y}`: output으로 categorial한 데이터(예: 강아지, 고양이), 입력 값에 기반하여 예측한 출력값
-`$\hat{f}$`: 수학적으로 input x를 $\hat{y}$로 예측, 기계 학습을 가지고 학습시키고자 하는 모델
+`x`: input으로 임의의 다차원 데이터(예: 자동차의 다양한 정보)   
+`y`: output으로 continuos한 데이터(예: 자동차의 출력, 가격)   
+` $\hat{f}$ `: 수학적으로 input x를 $\hat{y}$로 예측, 기계 학습을 가지고 학습시키고자 하는 모델   
 
-$\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ input-output 데이터 셋을 통해 Traning하여 $y = \hat{y}$ 가 되도록 $\hat{f}$를 찾아내는 것이 지도 학습이다.
+$\mathcal{D} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N$ input-output 데이터 셋을 통해 Traning하여 $|y = \hat{y}|$ 가 최소가 되도록 $\hat{f}$를 찾아내는 과정으로 다음과 같이 요약할 수 있다.
 
 
+**$\arg\min_{\hat{f}} (y - \hat{y})$**   
 
+
+
+<br>
 
 ## Unsupervised learning
 
 비지도 학습은 데이터의 output을 모르는 상태에서 input의 흥미로운 특징(insteresting structure)을 무형적으로 찾아내는 것이다. 
+
+
 
 ## Reinforcement learning
 
