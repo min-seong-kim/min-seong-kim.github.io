@@ -1,3 +1,11 @@
+- title: "Kyung Hee University AI·SW Hackathon, Kyung Hee University, Korea, 2025"
+  description: "Presentations by our team in khuthon"
+  photos:
+    - "/assets/img/khuthon2025_01.jpg"
+    - "/assets/img/khuthon2025_02.jpg"
+    - "/assets/img/khuthon2025_03.jpg"
+    - "/assets/img/khuthon2025_04.jpg"
+
 
 - title: "Korea Computer Congress, Jeju, Korea, 2024"
   description: "Presentations by Me in KCC"
@@ -11,7 +19,7 @@
 - title: "Workshop on Dependable and Secure Computing, Jeju, Korea, 2024 "
   description: "Presentations by Me, Lab Member, and Prof. Jongmoo Choi"
   photos:
-    - "/assets/img/wdsc2024_01.jng"
+    - "/assets/img/wdsc2024_01.jpg"
     - "/assets/img/wdsc2024_02.jpg"
     - "/assets/img/wdsc2024_04.jpg"
     - "/assets/img/wdsc2024_05.jpg"

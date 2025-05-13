@@ -17,4 +17,5 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hi, I am Minseong Kim.
+Hi, I am Minseong Kim.   
+Currently preparing for graduate school admission in the field of Computer Science.
